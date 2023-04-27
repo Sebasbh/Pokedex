@@ -1,0 +1,62 @@
+html {
+    background-color: bisque;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  animation: pulse 2s ease-in-out infinite;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+img:hover {
+  animation: shake 0.5s linear infinite;
+
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+
+.arrow{
+    height: 100px;
+    width: 100px;
+    
+}
