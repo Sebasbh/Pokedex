@@ -1,131 +1,96 @@
 const cardContainer = document.querySelector(".card-container");
-const prevButton = document.querySelector(".prev-button");
-const nextButton = document.querySelector(".next-button");
-let currentPage = 0;
-const cardsPerPage = 21;
-let totalPages;
+const pagination = document.querySelector(".pagination");
+const cardsPerPage = 57;
+let currentPage = 1;
+let totalPages = 0;
+let pokemonList = [];
 
-// Make a GET request to the PokeAPI to get the total number of Pokémon
-fetch("https://pokeapi.co/api/v2/pokemon?limit=1")
+fetch("https://pokeapi.co/api/v2/pokemon?limit=1118")
   .then(response => response.json())
   .then(data => {
-    const totalCards = data.count;
-    totalPages = Math.ceil(totalCards / cardsPerPage);
+    pokemonList = data.results;
+    totalPages = Math.ceil(pokemonList.length / cardsPerPage);
+    updateCardList();
 
-    // Update the next button and previous button visibility
-    updateButtonVisibility(currentPage, totalPages);
-
-    // Display the cards for the current page
-    displayCards(currentPage, cardsPerPage);
+    for (let i = 1; i <= totalPages; i++) {
+      const pageLink = document.createElement("a");
+      pageLink.href = "#!";
+      pageLink.textContent = i;
+      if (i === currentPage) {
+        pageLink.classList.add("active");
+      }
+      pageLink.addEventListener("click", () => {
+        currentPage = i;
+        updateCardList();
+      });
+      const listItem = document.createElement("li");
+      listItem.appendChild(pageLink);
+      pagination.appendChild(listItem);
+    }
   });
 
-// Add event listeners to the previous and next buttons
-prevButton.addEventListener("click", () => {
-  if (currentPage > 0) {
-    currentPage--;
-    displayCards(currentPage, cardsPerPage);
-    updateButtonVisibility(currentPage, totalPages);
-  }
-});
+function updateCardList() {
+  const startIndex = (currentPage - 1) * cardsPerPage;
+  const endIndex = startIndex + cardsPerPage;
+  const currentPokemonList = pokemonList.slice(startIndex, endIndex);
 
-nextButton.addEventListener("click", () => {
-  if (currentPage < totalPages - 1) {
-    currentPage++;
-    displayCards(currentPage, cardsPerPage);
-    updateButtonVisibility(currentPage, totalPages);
-  }
-});
+  cardContainer.innerHTML = "";
 
-function displayCards(pageNumber, cardsPerPage) {
-  // Calculate the offset based on the current page number and the number of cards per page
-  const offset = pageNumber * cardsPerPage;
+  currentPokemonList.forEach(pokemon => {
+    const cardCol = document.createElement("div");
+    const card = document.createElement("div");
+    const cardImage = document.createElement("div");
+    const cardContent = document.createElement("div");
+    const cardTitle = document.createElement("span");
+    const cardSubtitle = document.createElement("p");
+    const cardAction = document.createElement("div");
+    const cardActionLink = document.createElement("a");
+    const cardCatchButton = document.createElement("button");
+    const cardFavoritesButton = document.createElement("button");
 
-  // Make a GET request to the PokeAPI to get a subset of the Pokémon data
-  fetch(`https://pokeapi.co/api/v2/pokemon?limit=${cardsPerPage}&offset=${offset}`)
-    .then(response => response.json())
-    .then(data => {
-      // Array of the Pokémon for the current page
-      const pokemonList = data.results;
+    cardCol.classList.add("col", "s12", "m6", "l4");
+    card.classList.add("card");
+    cardImage.classList.add("card-image");
+    cardContent.classList.add("card-content");
+    cardTitle.classList.add("card-title");
+    cardSubtitle.classList.add("card-subtitle");
+    cardAction.classList.add("card-action");
+    cardCatchButton.classList.add("btn");
+    cardFavoritesButton.classList.add("btn");
 
-      // Clear the current cards from the card container
-      cardContainer.innerHTML = "";
+    cardTitle.textContent = pokemon.name;
+    cardSubtitle.textContent = `ID: ${pokemon.url.split("/")[6]}`;
+    cardActionLink.textContent = "Learn more (OFFICIAL)";
+    cardActionLink.href = `https://pokemondb.net/pokedex/${pokemon.name}`;
+    cardCatchButton.textContent = "➕";
+    cardFavoritesButton.textContent = "❤️";
 
-      // Create a card for each Pokémon in the pokemonList array
-      pokemonList.forEach(pokemon => {
-        // Create HTML elements for the card
-            const cardCol = document.createElement("div");
-            const card = document.createElement("div");
-            const cardImage = document.createElement("div");
-            const cardContent = document.createElement("div");
-            const cardTitle = document.createElement("span");
-            const cardSubtitle = document.createElement("p");
-            const cardAction = document.createElement("div");
-            const cardActionLink = document.createElement("a");
-            const cardCatchButton = document.createElement("button");
-            const cardFavoritesButton = document.createElement("button");
+    const pokemonId = pokemon.url.split("/")[6];
+    const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+    cardImage.innerHTML = `<img src="${imageUrl}">`;
 
-        // Add classes to the HTML elements
-        cardCol.classList.add("col", "s12", "m6", "l4");
-        card.classList.add("card");
-        cardImage.classList.add("card-image");
-        cardContent.classList.add("card-content");
-        cardTitle.classList.add("card-title");
-        cardSubtitle.classList.add("card-subtitle");
-        cardAction.classList.add("card-action");
-        cardCatchButton.classList.add("btn");
-        cardFavoritesButton.classList.add("btn"); 
+    card.appendChild(cardImage);
+    card.appendChild(cardContent);
+    cardContent.appendChild(cardTitle);
+    cardContent.appendChild(cardSubtitle);
+    cardAction.appendChild(cardActionLink);
+    cardAction.appendChild(cardCatchButton);
+    cardAction.appendChild(cardFavoritesButton);
+    cardContent.appendChild(cardAction);
 
-        // Set the content of the HTML elements
-        cardTitle.textContent = pokemon.name;
-        cardSubtitle.textContent = `ID: ${pokemon.url.split("/")[6]}`;
-        cardActionLink.textContent = "Learn more (OFFICIAL)";
-        cardActionLink.href = `https://pokemondb.net/pokedex/${pokemon.name}`;
-        cardCatchButton.textContent = "➕";
-        cardFavoritesButton.textContent = "❤️";
+    cardCol.appendChild(card);
 
-        // Set the URL for the card image
-        const pokemonId = pokemon.url.split("/")[6];
-        const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
-        cardImage.innerHTML = `<img src="${imageUrl}">`;
+    cardContainer.appendChild(cardCol);
+  });
 
-        // Add the HTML elements to the card
-        card.appendChild(cardImage);
-        card.appendChild(cardContent);
-        cardContent.appendChild(cardTitle);
-        cardContent.appendChild(cardSubtitle);
-        cardAction.appendChild(cardActionLink);
-        cardAction.appendChild(cardCatchButton);
-        cardAction.appendChild(cardFavoritesButton); // Agregado para el nuevo botón
-        cardContent.appendChild(cardAction);
-
-
-        // Add the card to the card column
-        cardCol.appendChild(card);
-        // Add the card column to the card container
-        cardContainer.appendChild(cardCol);
-      });
-    });
+  const pageLinks = pagination.querySelectorAll("a");
+  pageLinks.forEach(link => {
+    const pageNumber = parseInt(link.textContent);
+    if (pageNumber === currentPage) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
 }
-
-// Agregar manejador de eventos para el botón "Add to favorites"
-cardFavoritesButton.addEventListener("click", () => {
-  // Lógica para agregar este pokemon a la lista de favoritos
-});
-
-
-function updateButtonVisibility(currentPage, totalPages) {
-  // Hide or show the previous and next buttons based on the current page number
-  if (currentPage === 0) {
-    prevButton.classList.add("hide");
-  } else {
-    prevButton.classList.remove("hide");
-  }
-
-  if (currentPage === totalPages - 1) {
-    nextButton.classList.add("hide");
-  } else {
-    nextButton.classList.remove("hide");
-  }
-}
-
 
