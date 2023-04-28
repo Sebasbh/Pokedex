@@ -94,3 +94,38 @@ function updateCardList() {
   });
 }
 
+const searchInput = document.querySelector('#search-input');
+const searchResults = document.querySelector('#search-results');
+
+// Agregar un evento "input" al campo de entrada para buscar en la lista
+searchInput.addEventListener('input', searchHandler);
+
+function searchHandler(event) {
+  const searchQuery = event.target.value.toLowerCase();
+  const filteredResults = pokemonList.filter(pokemon => {
+    return pokemon.name.includes(searchQuery);
+  });
+
+  renderResults(filteredResults);
+}
+
+function renderResults(results) {
+  searchResults.innerHTML = '';
+
+  if (results.length > 0) {
+    const slicedResults = results.slice(0, 10);
+    slicedResults.forEach(result => {
+      const item = document.createElement('li');
+      item.classList.add('collection-item');
+      item.textContent = result.name;
+      searchResults.appendChild(item);
+    });
+  } else {
+    const item = document.createElement('li');
+    item.classList.add('collection-item', 'grey-text');
+    item.textContent = 'No se encontraron resultados.';
+    searchResults.appendChild(item);
+  }
+}
+
+
