@@ -12,31 +12,45 @@ fetch("https://pokeapi.co/api/v2/pokemon?limit=1118")
     totalPages = Math.ceil(pokemonList.length / cardsPerPage);
     updateCardList();
 
-    for (let i = 1; i <= totalPages; i++) {
-      const pageLink = document.createElement("a");
-      pageLink.href = "#!";
-      pageLink.textContent = i;
-      if (i === currentPage) {
-        pageLink.classList.add("active");
-      }
-      pageLink.addEventListener("click", () => {
-        currentPage = i;
-        updateCardList();
-      });
-      const listItem = document.createElement("li");
-      listItem.appendChild(pageLink);
-      pagination.appendChild(listItem);
-    }
+    createPaginationLinks();
   });
 
-function updateCardList() {
+function createPaginationLinks() {
+  pagination.innerHTML = "";
+
+  for (let i = 1; i <= totalPages; i++) {
+    const pageLink = document.createElement("a");
+    pageLink.href = "#!";
+    pageLink.textContent = i;
+    if (i === currentPage) {
+      pageLink.classList.add("active");
+    }
+    pageLink.addEventListener("click", () => {
+      currentPage = i;
+      updateCardList();
+    });
+    const listItem = document.createElement("li");
+    listItem.appendChild(pageLink);
+    pagination.appendChild(listItem);
+  }
+}
+
+function updateCardList(searchTerm = '') {
+  if (searchTerm === '') {
+    currentPokemonList = pokemonList;
+  } else {
+    currentPokemonList = pokemonList
+      .filter(pokemon => pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  }
+
   const startIndex = (currentPage - 1) * cardsPerPage;
   const endIndex = startIndex + cardsPerPage;
-  const currentPokemonList = pokemonList.slice(startIndex, endIndex);
 
   cardContainer.innerHTML = "";
 
-  currentPokemonList.forEach(pokemon => {
+  const filteredPokemonList = currentPokemonList.slice(startIndex, endIndex);
+
+  filteredPokemonList.forEach(pokemon => {
     const cardCol = document.createElement("div");
     const card = document.createElement("div");
     const cardImage = document.createElement("div");
@@ -91,41 +105,45 @@ function updateCardList() {
     } else {
       link.classList.remove("active");
     }
-  });
-}
-
-const searchInput = document.querySelector('#search-input');
-const searchResults = document.querySelector('#search-results');
-
-// Agregar un evento "input" al campo de entrada para buscar en la lista
-searchInput.addEventListener('input', searchHandler);
-
-function searchHandler(event) {
-  const searchQuery = event.target.value.toLowerCase();
-  const filteredResults = pokemonList.filter(pokemon => {
-    return pokemon.name.includes(searchQuery);
-  });
-
-  renderResults(filteredResults);
-}
-
-function renderResults(results) {
-  searchResults.innerHTML = '';
-
-  if (results.length > 0) {
-    const slicedResults = results.slice(0, 10);
-    slicedResults.forEach(result => {
-      const item = document.createElement('li');
-      item.classList.add('collection-item');
-      item.textContent = result.name;
-      searchResults.appendChild(item);
+    link.addEventListener("click", () => {
+      currentPage = pageNumber;
+      updateCardList(searchInput.value.trim());
     });
-  } else {
-    const item = document.createElement('li');
-    item.classList.add('collection-item', 'grey-text');
-    item.textContent = 'No se encontraron resultados.';
-    searchResults.appendChild(item);
+  });
+
+  const searchInput = document.querySelector('#search-input');
+  const searchResults = document.querySelector('#search-results');
+
+  searchInput.addEventListener('input', () => {
+    const searchTerm = searchInput.value.trim();
+    currentPage = 1;
+    updateCardList(searchTerm);
+
+    if (searchTerm !== '') {
+      const filteredPokemonList = pokemonList.filter(pokemon => pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()));
+      renderResults(filteredPokemonList);
+    } else {
+      renderResults([]);
+    }
+  });
+
+  function renderResults(results) {
+    const searchResults = document.querySelector('#search-results');
+    searchResults.innerHTML = '';
+
+    if (results.length > 0) {
+      const slicedResults = results.slice(0, 5);
+      slicedResults.forEach(result => {
+        const item = document.createElement('li');
+        item.classList.add('collection-item');
+        item.textContent = result.name;
+        searchResults.appendChild(item);
+      });
+    } else {
+      const item = document.createElement('li');
+      item.classList.add('collection-item', 'grey-text');
+      item.textContent = 'No results were found.';
+      searchResults.appendChild(item);
+    }
   }
 }
-
-
