@@ -59,7 +59,7 @@ La página web ha sido desplegada en un servidor Heroku y está disponible en la
 
 ## Autor
 
-Este proyecto ha sido desarrollado por [Nombre del desarrollador](https://github.com/developer).
+Este proyecto ha sido desarrollado por [Sebastian B.H.](https://github.com/Sebasbh).
 
 ## Instalación
 
@@ -86,4 +86,4 @@ Este proyecto se distribuye bajo la licencia [MIT](https://opensource.org/licens
 
 ## Contacto
 
-Si tienes alguna duda, sugerencia o comentario acerca de este proyecto, no dudes en ponerte en contacto con el equipo de desarrollo a través del correo electrónico contacto@example.com. Estamos siempre dispuestos a escuchar y mejorar el proyecto en base a las necesidades de la comunidad.
+Si tienes alguna duda, sugerencia o comentario acerca de este proyecto, no dudes en ponerte en contacto con el equipo de desarrollo a través del correo electrónico sebasheins@gmail.com. Estamos siempre dispuestos a escuchar y mejorar el proyecto en base a las necesidades de la comunidad.
