@@ -77,6 +77,13 @@ function updateCardList(searchTerm = '') {
     cardActionLink.textContent = "Learn more (OFFICIAL)";
     cardActionLink.href = `https://pokemondb.net/pokedex/${pokemon.name}`;
     cardCatchButton.textContent = "➕";
+
+    cardCatchButton.addEventListener('click', () => {
+    window.localStorage.setItem('selectedPokemon', JSON.stringify(pokemon));
+    window.location.href = "../Detail/detail.html";
+    });
+
+
     cardFavoritesButton.textContent = "❤️";
 
     const pokemonId = pokemon.url.split("/")[6];
