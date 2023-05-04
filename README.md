@@ -55,7 +55,7 @@ Para ejecutar las pruebas, siga estos pasos:
 
 ## Deploy
 
-La página web ha sido desplegada en un servidor Heroku y está disponible en la siguiente URL: [https://pokedex.example.com](https://pokedex.example.com)
+La página web ha sido desplegada en un servidor Heroku y está disponible en la siguiente URL: [https://sebasbh.github.io/Pokemon/index.html](https://sebasbh.github.io/Pokemon/index.html)
 
 ## Autor
 
