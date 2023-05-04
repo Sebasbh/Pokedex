@@ -33,11 +33,6 @@ Este es el README para la página web de la Pokedex. La página web utiliza HTML
 - Hacer deploy.
 - Hacer algún tipo de test.
 - Link del deploy.
-[GitHub](https://github.com/)
-[Trello](https://trello.com/)
-[Materialize](https://materializecss.com/)
-[PokeAPI](https://pokeapi.co/)
-[Figma](https://www.figma.com/)
 
 
 ## Tecnologías utilizadas
