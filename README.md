@@ -72,7 +72,7 @@ Este es el README para la página web de la Pokedex. La página web utiliza HTML
 
 ## Uso
 
-Para utilizar la página web, simplemente acceda a la siguiente URL: [https://www.example.com/pokedex](https://www.example.com/pokedex)
+Para utilizar la página web, simplemente acceda a la siguiente URL: [https://sebasbh.github.io/Pokedex/index.html](https://sebasbh.github.io/Pokedex/index.html)
 
 ## Pruebas
 
@@ -84,7 +84,7 @@ Para ejecutar las pruebas, siga estos pasos:
 
 ## Deploy
 
-La página web ha sido desplegada en un servidor Heroku y está disponible en la siguiente URL: [https://sebasbh.github.io/Pokemon/index.html](https://sebasbh.github.io/Pokemon/index.html)
+La página web ha sido desplegada en un servidor github pages y está disponible en la siguiente URL: [https://sebasbh.github.io/Pokemon/index.html](https://sebasbh.github.io/Pokemon/index.html)
 
 ## Autor
 
