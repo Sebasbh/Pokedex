@@ -33,6 +33,12 @@ Este es el README para la página web de la Pokedex. La página web utiliza HTML
 - Hacer deploy.
 - Hacer algún tipo de test.
 - Link del deploy.
+[GitHub](https://github.com/)
+[Trello](https://trello.com/)
+[Materialize](https://materializecss.com/)
+[PokeAPI](https://pokeapi.co/)
+[Figma](https://www.figma.com/)
+
 
 ## Tecnologías utilizadas
 
@@ -69,10 +75,18 @@ Este es el README para la página web de la Pokedex. La página web utiliza HTML
 - El link de GitHub y el diseño en Figma están disponibles en la página web.
 - Se ha realizado el deploy de la página web.
 - Se han implementado pruebas de funcionamiento básicas.
+## Links
+[GitHub](https://github.com/Sebasbh)
+[Trello](https://trello.com/invite/b/4t0cATRJ/ATTIcb3cc5b6ef760819d8ecccb480c7e1d34805562A/pokemon)
+[Materialize](https://materializecss.com/)
+[PokeAPI](https://pokeapi.co/)
+[Figma](https://www.figma.com/file/9CBEkApdiC6pH0hgexF7XW/Pokemon?type=design&node-id=0%3A1&t=pIYfK1I193nY5rMG-1)
+
 
 ## Uso
 
 Para utilizar la página web, simplemente acceda a la siguiente URL: [https://sebasbh.github.io/Pokedex/index.html](https://sebasbh.github.io/Pokedex/index.html)
+
 
 ## Pruebas
 
