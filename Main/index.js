@@ -80,7 +80,7 @@ function updateCardList(searchTerm = '') {
 
     cardCatchButton.addEventListener('click', () => {
     window.localStorage.setItem('selectedPokemon', JSON.stringify(pokemon));
-    window.location.href = "../Detail/detail.html";
+    window.location.href = "../Detail/index.html";
     });
 
 
