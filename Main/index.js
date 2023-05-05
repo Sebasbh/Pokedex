@@ -1,23 +1,29 @@
+// Select the card container and pagination elements
 const cardContainer = document.querySelector(".card-container");
 const pagination = document.querySelector(".pagination");
+
 const cardsPerPage = 57;
 let currentPage = 1;
 let totalPages = 0;
 let pokemonList = [];
 
+// Fetch Pokemon data
 fetch("https://pokeapi.co/api/v2/pokemon?limit=1118")
   .then(response => response.json())
   .then(data => {
     pokemonList = data.results;
     totalPages = Math.ceil(pokemonList.length / cardsPerPage);
+    
+    // Update the card list and create pagination links
     updateCardList();
-
     createPaginationLinks();
   });
 
+// Create pagination links
 function createPaginationLinks() {
   pagination.innerHTML = "";
 
+  // Loop through the total number of pages and create links
   for (let i = 1; i <= totalPages; i++) {
     const pageLink = document.createElement("a");
     pageLink.href = "#!";
@@ -25,6 +31,8 @@ function createPaginationLinks() {
     if (i === currentPage) {
       pageLink.classList.add("active");
     }
+
+    // Update the card list when a page link is clicked
     pageLink.addEventListener("click", () => {
       currentPage = i;
       updateCardList();
@@ -35,6 +43,7 @@ function createPaginationLinks() {
   }
 }
 
+// Update the card list with filtered data if a search term is provided
 function updateCardList(searchTerm = '') {
   if (searchTerm === '') {
     currentPokemonList = pokemonList;
@@ -50,6 +59,7 @@ function updateCardList(searchTerm = '') {
 
   const filteredPokemonList = currentPokemonList.slice(startIndex, endIndex);
 
+// Loop through the filtered Pokemon list and create cards
   filteredPokemonList.forEach(pokemon => {
     const cardCol = document.createElement("div");
     const card = document.createElement("div");
@@ -78,11 +88,11 @@ function updateCardList(searchTerm = '') {
     cardActionLink.href = `https://pokemondb.net/pokedex/${pokemon.name}`;
     cardCatchButton.textContent = "➕";
 
+    // Add event listener to the "Catch" button
     cardCatchButton.addEventListener('click', () => {
-    window.localStorage.setItem('selectedPokemon', JSON.stringify(pokemon));
-    window.location.href = "../Detail/index.html";
+      window.localStorage.setItem('selectedPokemon', JSON.stringify(pokemon));
+      window.location.href = "../Detail/index.html";
     });
-
 
     cardFavoritesButton.textContent = "❤️";
 
@@ -104,6 +114,7 @@ function updateCardList(searchTerm = '') {
     cardContainer.appendChild(cardCol);
   });
 
+  // Update the active state of pagination links
   const pageLinks = pagination.querySelectorAll("a");
   pageLinks.forEach(link => {
     const pageNumber = parseInt(link.textContent);
@@ -112,12 +123,15 @@ function updateCardList(searchTerm = '') {
     } else {
       link.classList.remove("active");
     }
+
+    // Update the card list when a page link is clicked
     link.addEventListener("click", () => {
       currentPage = pageNumber;
       updateCardList(searchInput.value.trim());
     });
   });
 
+  // Add search functionality
   const searchInput = document.querySelector('#search-input');
   const searchResults = document.querySelector('#search-results');
 
@@ -134,10 +148,12 @@ function updateCardList(searchTerm = '') {
     }
   });
 
+  // Add search functionality
   function renderResults(results) {
     const searchResults = document.querySelector('#search-results');
     searchResults.innerHTML = '';
 
+    // Add search functionality
     if (results.length > 0) {
       const slicedResults = results.slice(0, 5);
       slicedResults.forEach(result => {
@@ -147,6 +163,7 @@ function updateCardList(searchTerm = '') {
         searchResults.appendChild(item);
       });
     } else {
+      // If there are no results, display a "No results" message
       const item = document.createElement('li');
       item.classList.add('collection-item', 'grey-text');
       item.textContent = 'No results were found.';
